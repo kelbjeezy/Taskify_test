@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Task_Tracker.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Main.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Taskify</title>
+</head>
+<body>
+    <div class="hero" id="task-page-hero">
+        <nav class="navbar navbar-dark fixed-top navbar-custom" id="navbar-task-page">
+            <div class="container-fluid custom-container">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            {% if category == 'error' %}
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Whoops!</strong> {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                {% else %}
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Nice!</strong> {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <div class="topnav-centered"><a class="navbar-brand" href="#" align="center"><u><h1 style="color: #e4e0e0;">Taskify</h1></u></a></div>
+                <button class="boton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation" style="color: #e4e0e0;">
+                    <i class="fa fa-home"></i>
+                </button>
+                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel" style="background: #18191A !important;">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body" style="background: #18191A !important;">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="navbar-item">
+                        <a class="nav-link" href="/"><h5>Home</h5></a>
+                    </li>
+                    <li class="navbar-item">
+                        <a class="nav-link" href="/logout"><h5>Logout</h5></a>
+                    </li>
+                    <li class="navbar-item">
+                        <a class="nav-link" href="https://github.com/kelbwah"><h5><span class="icon">
+                            <ion-icon name="logo-github" style="font-size:40px;"></ion-icon>
+                        </span></h5></a>
+                    </li>
+                    <li class="navbar-item">
+                        <a class="nav-link" href="https://www.linkedin.com/in/kelby-amandy-ba818a214/"><h5><span class="icon">
+                            <ion-icon name="logo-linkedin" style="font-size:40px;"></ion-icon>
+                        </span></h5></a>
+                    </li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="offcanvas offcanvas-start text-bg-dark" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" style="background: #18191A !important;"">
+            <div class="offcanvas-header">
+                <u><h3 class="offcanvas-title" id="offcanvasScrollingLabel"><strong>Table of Contents</strong></h3></u>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div id="list-example" class="list-group">
+                    {% if user.tasks %}
+                        {% for task_num, task in sorted_tasks | enumerate%}
+                            <a class="list-group-item list-group-item-action" href="#list-item-{{task_num+1}}">{{task.data_title}}</a>
+                        {% endfor %}
+                    {% else %}
+                        <br><br>
+                        <h5>There are no tasks here!</h5>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="top-buttons">
+            <button type="button" class="btn btn-primary col-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: #e4e0e0;">Add Task</button>    
+            <button class="btn btn-primary col-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" style="color: #e4e0e0;">Table of Contents</button>         
+        </div>
+
+
+        <div class="task-box" class="scrollable-content">
+                <div id="tasks" data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" data-bs-offset="-15" tabindex="-1">
+                    {% if user.tasks %}
+                        {% for task_num, task in sorted_tasks | enumerate%}
+                            <div>
+                                {% if task.completed == False %}
+                                    <label class="task-label fade-in">
+                                            <input type="checkbox" id="flexCheckDefault" value="1" onclick="completeTask({{task.id}})">
+                                            <h4 id="list-item-{{task_num+1}}">
+                                            <span style="margin-right: 12.5px;"><strong>&nbsp;{{task.data_title}}</strong></span>
+                                            <span><i>Due: {{task.due_date}}</i></span>
+                                            <button type="button" onclick="deleteTask({{task.id}})" style="font-size: 20px; border: none; background-color:#73B1B1;">
+                                                <ion-icon name="trash" style="font-size:20px;"></ion-icon>
+                                            </button>
+                                            {% set chosen_datetime = task.due_date | format_datetime %}
+                                            {% set current_datetime = blahblah | get_datetime %}
+                                            {% if current_datetime > chosen_datetime %}
+                                                <span><strong style="color: crimson">Task Overdue!</strong></span>
+                                            {% elif current_datetime < chosen_datetime %}
+                                                {% set difference = chosen_datetime - current_datetime %}
+                                                {% set deltatime = difference.days %}
+                                                {% if deltatime > 1 %}
+                                                    <span><strong style="color: olivedrab">{{deltatime}} days left!</strong></span>
+                                                {% else %}
+                                                    <span><strong style="color: olivedrab">{{deltatime}} day left!</strong></span>
+                                                {% endif %}
+                                            {% else %}
+                                                <span><strong style="color: red">Task due today!</strong></span>
+                                            {% endif %}
+
+                                            </h4>
+                            
+
+                                    </label>
+                                    <p class="fade-in">{{task.data}}</p>
+                                    <br>
+                                {% else %}
+                                    <label class="task-label fade-in">
+                                        <input type="checkbox" id="flexCheckChecked" value="1" onclick="uncompleteTask({{task.id}})" checked>
+                                        <h4 id="list-item-{{task_num+1}}">
+                                            <span style="margin-right: 12.5px;"><strong style="text-decoration: line-through !important; color: darkolivegreen;">&nbsp;{{task.data_title}}</strong></span>
+                                            <span style="text-decoration: line-through !important; color: darkolivegreen;"><i>Due: {{task.due_date}}</i></span>
+                                            <button type="button" id="delete-button" onclick="deleteTask({{task.id}})" style="font-size: 20px; border: none; background-color:#73B1B1;">
+                                                <ion-icon name="trash" style="font-size:20px;"></ion-icon>
+                                            </button>
+                                        </h4> 
+                                    </label>
+                                    <p class="fade-in" style="text-decoration: line-through !important; color: darkolivegreen;">{{task.data}}</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    
+                    {% else %}
+                        <h3 align="center" class="notask fade-in"><strong>There are no tasks right now!</strong></h3>
+                    {% endif %}
+                
+                </div>
+        </div>
+
+    </div>
+    <img id="myImage" src="https://freight.cargo.site/t/original/i/666d1f607e112ecccb3fd484b58c5666579ad49c0751ab5f5bd0309d9c2ff6a4/ezgif-1-2e448466e3.gif">
+    <img id="myImage2" src="https://www.icegif.com/wp-content/uploads/2023/01/icegif-804.gif">
+    <img id="myImage3" src="https://gifdb.com/images/high/naruto-run-peepo-pepe-parody-3cjew15srovdyp3g.gif">
+    <img id="myImage4" src="https://cdn3.emoji.gg/emojis/1177-pepe-sit.gif">
+    <img id="myImage5" src="https://gifdb.com/images/high/pepe-the-frog-clown-eating-mcdonalds-meal-zl8zchanumkp1b1v.gif">
+
+
+    <div class="modal fade" role="dialog" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Creating New Task</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST">
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Title:</label>
+                  <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Task:</label>
+                  <textarea class="form-control" id="task" name="task" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="message-text" class="col-form-label">Due Date:</label>
+                    <input class="form-control" type="date" id="date" name="date" required></input>
+                  </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Task</button>
+                </div>
+              </form>
+
+            </div>
+            <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Create Task</button>
+            </div> -->
+          </div>
+        </div>
+    </div>
+   
+    
+    <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    
+</body>
+</html>

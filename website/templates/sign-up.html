@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    input.custom-input:-webkit-autofill,
+    textarea.custom-input:-webkit-autofill,
+    select.custom-input:-webkit-autofill {
+        -webkit-box-shadow: 0 100px 7px 0px #18191A inset;
+        -webkit-text-fill-color: #fff !important;
+    }
+  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='Task_Tracker.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Main.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <title>Taskify</title>
+</head>
+<body>
+    <div class="hero" id="background">
+        <nav class="navbar navbar-dark bg-dark fixed-top navbar-custom" style="background-color: #18191A !important;">
+            <div class="container-fluid custom-container">
+                <div></div><!-- Just a random div tag to put the navigation button on the right side of screen-->
+                <button class="boton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation" style="color: #e4e0e0;">
+                    <i class="fa fa-home"></i>
+                </button>
+                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="navbar-item">
+                        <a class="nav-link" href="/"><h5>Home</h5></a>
+                    </li>
+                    <li class="navbar-item">
+                        <a class="nav-link" href="/login"><h5>Login</h5></a>
+                    </li>
+                    <li class="navbar-item">
+                        <a class="nav-link" href="https://github.com/kelbwah"><h5><span class="icon">
+                            <ion-icon name="logo-github" style="font-size:40px;"></ion-icon>
+                        </span></h5></a>
+                    </li>
+                    <li class="navbar-item">
+                        <a class="nav-link" href="https://www.linkedin.com/in/kelby-amandy-ba818a214/"><h5><span class="icon">
+                            <ion-icon name="logo-linkedin" style="font-size:40px;"></ion-icon>
+                        </span></h5></a>
+                    </li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+            </nav>
+        <div class="wrapper">
+            <div class="form-box register">
+                <h2 class="login-text">Sign Up</h2>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            {% if category == 'error' %}
+                                <label class="error-text" id="error-text">
+                                    {{ message }}
+                                </label>
+
+                            {% else %}
+                            <label class="error-text" id="error-text">
+                                    {{ message }}
+                                </label>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}    
+                <form action="" method="POST" id="registerForm">
+                    <div class="input-box">
+                        <span class="icon">
+                            <ion-icon name="mail"></ion-icon>
+                        </span>
+                        <input name="email" id ="email" type="email" class="custom-input" required>
+                        <div id="email-status"></div>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon">
+                            <i class="bi bi-eye-slash" id="togglePassword"></i>
+                        </span>
+                        <input name="password" id="password" type="password" class="custom-input" required>
+                        <label>Password</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label><input type="checkbox" required>I agree to the Terms & Conditions</label>
+                    </div>
+                    <button type="submit" class="btnn">Register</button>
+                    <div class="login-register">
+                        <p>Already have an account? <a href="/login" class="login-link">Login</a></p>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='Script.js') }}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    
+</body>
+</html>

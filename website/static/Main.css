@@ -1,0 +1,305 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-style:normal;
+    box-sizing: border-box;
+}
+.boton{
+    background-color: DodgerBlue; /* Blue background */
+    border-radius: 10px;
+    border: none;
+    color: white; /* White text */
+    padding: 12px 16px; /* Some padding */
+    font-size: 20px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    transition: background-color 0.3s ease;
+}
+
+#myImage{
+    visibility: hidden;
+    opacity: 0;
+    position: fixed; 
+    top:28%; 
+    left:3%; 
+    width:15%; 
+    transition: opacity 1s;
+}
+
+#myImage2{
+    visibility: hidden;
+    opacity: 0;
+    position: fixed; 
+    top:28%; 
+    left:20%; 
+    width:15%; 
+    transition: opacity 1s;
+}
+
+#myImage3{
+    visibility: hidden;
+    opacity: 0;
+    position: fixed; 
+    top:25%; 
+    left: 40%; 
+    width:15%; 
+    transition: opacity 1s;
+}
+
+#myImage4{
+    visibility: hidden;
+    opacity: 0;
+    position: fixed; 
+    top:25%; 
+    left:65%; 
+    width:15%; 
+    transition: opacity 1s;
+}
+
+#myImage5{
+    visibility: hidden;
+    opacity: 0;
+    position: fixed; 
+    top:25%; 
+    left:85%; 
+    width:15%; 
+    transition: opacity 1s;
+}
+
+
+
+
+
+/* Darker background on mouse-over */
+.boton:hover {
+    background-color: #800080;
+
+}
+
+.links a{
+    display: inline-block;
+    margin-right: 10px;
+
+}
+
+
+#navbar-task-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("https://i.pinimg.com/600x315/7b/03/99/7b03994a63afc7991834c4d1796c3742.jpg");
+    filter: blur(13px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+    z-index: -1; /* Place the pseudo-element behind the navbar content */
+    border-radius: 10%;
+    border-color: transparent;
+    border: none;
+    outline: none;
+ }
+ 
+
+#task-page-hero::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("https://i.pinimg.com/600x315/7b/03/99/7b03994a63afc7991834c4d1796c3742.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1; /* Place the pseudo-element behind the navbar content */
+    filter: blur(13px);
+    border: none;
+    outline: none;
+}
+
+.topnav-centered a {
+    float: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+
+.task-box {
+    width: auto;
+    padding: 15px;
+    border: 7px solid #222222dc;
+    border-radius: 15px;
+    background-color:#73B1B1;
+    align-items: center;
+    margin-top: 2%;
+    overflow: auto;
+    height: 450px;
+    max-height: 550px;
+    color: rgb(44, 40, 40);
+}
+
+.task-box h3{
+    padding-top: 10%;
+}
+
+.scrollable-content{
+    max-height: 450px;
+    color: white;
+    font-size: 30px;
+}
+
+
+.task-label {
+    display: flex;
+    align-items: center;
+}
+
+.task-label p {
+    display: block;
+}
+
+
+.top-buttons{
+    margin-top: 10%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    align-content: center;
+    transform: translateX(1.7%);
+}
+
+.top-buttons button{
+    margin-right: 3%;
+}
+
+.notask {
+    opacity: 0; /* Initially set the opacity to 0 */
+    transition: opacity 0.5s ease-in-out; /* Add transition effect */
+  }
+
+
+@keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fade-out {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+
+.fade-in {
+    animation: fade-in 0.5s ease-in forwards;
+}
+
+
+@media (max-width: 425px) {
+    .task-box {
+        width: 185%;
+        transform: translateX(-23%);
+        padding: 15px;
+        border: 7px solid #010101;
+        border-radius: 10px;
+        align-items: center;
+        margin-top: 15%;
+        max-height: 350px;
+        overflow: auto;
+        background-color:#73B1B1;
+        color: rgb(44, 40, 40); 
+    }
+
+    .scrollable-content{
+        max-height: 350px;
+        color: black;
+        font-size: 25px;
+    }
+
+
+    .task-box strong{
+        font-size: 13px;
+    }
+
+    .task-box span{
+        font-size: 13px;
+    }
+
+    .task-box h3{
+        padding-top: 38%;
+    }
+
+
+    .top-buttons{
+        margin-top: 60%; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
+        align-content: center;
+        transform: translateX(1.3%);
+    }
+
+
+    .top-buttons button{
+        margin-right: 5%;
+        margin-left: 5%;
+        font-size: 12px;
+        width: 75%;
+    }
+
+
+    .scrollable-content{
+        max-height: 600px;
+        overflow: auto;
+        color: black;
+        font-size: 14px;
+    }
+
+    #myImage{
+        opacity: 0;
+        position: fixed; 
+        top:30%; 
+        left:3%; 
+        width:20%; 
+        transition: opacity 1s;
+    }
+
+    #myImage2{
+        opacity: 0;
+        position: fixed; 
+        top:30%; 
+        left:20%; 
+        width:20%; 
+        transition: opacity 1s;
+    }
+
+    #myImage3{
+        opacity: 0;
+        position: fixed; 
+        top:30%; 
+        left:40%; 
+        width:20%; 
+        transition: opacity 1s;
+    }
+
+    #myImage4{
+        opacity: 0;
+        position: fixed; 
+        top:30%; 
+        left:65%; 
+        width:17%; 
+        transition: opacity 1s;
+    }
+
+    #myImage5{
+        opacity: 0;
+        position: fixed; 
+        top:30%; 
+        left:87%; 
+        width:13%; 
+        transition: opacity 1s;
+    }
+
+}
