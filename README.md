@@ -1,5 +1,5 @@
 # Taskify
-A Task Managing app created using HTML (Bootstrap), CSS, Jinja2, Sqlalchemy, Flask, Python, and Javascript. Allows for user authentication and sessions using Flask and password encryption for user-privacy.
+A Task Managing app created using HTML (Bootstrap), CSS, Jinja2, Sqlalchemy, Flask, Python, and Javascript. Allows for user authentication and sessions with Flask and password encryption for user-privacy.
 The backend of this website uses Flask and Sqlalchemy for user authentication and uses a bit of jinja for scripting with the Flask environment.
 
 Tasks are sorted first by completion then the due date. The website is also mobile-friendly and is responsive to various screen sizes! 
